@@ -1,3 +1,5 @@
+> **Start here:** Download and extract `ECE1512_Project_A_GitHub.zip`, then open the extracted `ECE1512_Project_A_GitHub/` folder. It contains `config/`, `dataset_csv/`, `results/` (all three baseline checkpoints, histories, splits and metrics), `notebooks/`, `tools/`, `docs/`, and `figures/`. The commands below run from that extracted folder. Root-level Python files are also provided for direct browsing. Final cloud extension artifacts and the executed notebook are still pending import.
+
 # ECE1512 Project A: ABMIL with Feature Perturbation and Consistency
 
 Whole-slide classification on CAMELYON16 (C16), CAMELYON17 (C17), and BRACS using pre-extracted patch features. The implemented research extension adds masked Gaussian feature noise and a symmetric KL prediction-consistency loss to ABMIL. A second, unimplemented proposal explores multi-branch attention with a diversity penalty.
