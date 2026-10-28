@@ -1,0 +1,22 @@
+# Large downloadable input data
+feature/
+slide/
+*.h5
+*.hdf5
+*.part
+# Local environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+.ipynb_checkpoints/
+# Superseded or interrupted experiments
+results_extension/consistency_v2/
+**/incomplete_*/
+**/experiment_manifest_backup_*.json
+# Credentials
+.env
+.env.*
+*.pem
+*.key
