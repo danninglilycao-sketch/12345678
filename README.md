@@ -1,14 +1,12 @@
-> **Start here:** Download and extract `ECE1512_Project_A_GitHub.zip`, then open the extracted `ECE1512_Project_A_GitHub/` folder. It contains `config/`, `dataset_csv/`, `results/` (all three baseline checkpoints, histories, splits and metrics), `notebooks/`, `tools/`, `docs/`, and `figures/`. The commands below run from that extracted folder. Root-level Python files are also provided for direct browsing. Final cloud extension artifacts and the executed notebook are still pending import.
+> **Start here:** Download and extract `ECE1512_Project_A_GitHub.zip`, then open the extracted `ECE1512_Project_A_GitHub/` folder. The archive preserves the complete project directory structure. Root-level source files, the executed notebook, final comparison CSV and selected figures are also available for browsing.
 
 # ECE1512 Project A: ABMIL with Feature Perturbation and Consistency
 
 Whole-slide classification on CAMELYON16 (C16), CAMELYON17 (C17), and BRACS using pre-extracted patch features. The implemented research extension adds masked Gaussian feature noise and a symmetric KL prediction-consistency loss to ABMIL. A second, unimplemented proposal explores multi-branch attention with a diversity penalty.
 
-> **Upload status:** Code, baseline results and method figures are packaged. Original final extension files and the executed cloud notebook are pending import from Drive. Until imported, the result-check and plotting commands will report missing extension files. No retraining is needed to collect those saved artifacts.
-
 ## Scope and provenance
 
-The baseline notebook, model helpers, dataset code and configs derive from the supplied course project package completed for this group. `research_extension.py` is the experiment implementation used by the project. Original baseline artifacts are preserved in `results/`; completed extension artifacts belong in `results_extension/consistency_v1/`. Method figures are in `figures/method/`.
+The baseline notebook, model helpers, dataset code and configs derive from the supplied course project package completed for this group. `research_extension.py` is the experiment implementation used by the project. Original baseline artifacts are preserved in `results/`; completed extension artifacts are preserved in `results_extension/consistency_v1/`. Method figures are in `figures/method/`.
 
 The historical experiment implementation is intentionally preserved byte-for-byte. Its experiment manifest includes a hash of that file, and editing it would invalidate completed-run reuse. Additional inspection and plotting utilities are separate under `tools/`.
 
@@ -36,7 +34,7 @@ Raw features and WSIs are external data, not included in Git. Metadata is in `da
 
 ## Baseline
 
-Open `notebooks/Baseline_Reference.ipynb`, set `PROJECT_DIR` to the repository root, and choose a dataset. The reference notebook contains Colab-specific setup/download cells; skip or adapt them outside Colab. Run the training/evaluation cells for the selected dataset. The standalone architecture/evaluation helpers are in `baseline_core.py`.
+The executed cloud notebook is `notebooks/ECE1512_ProjectA_Student.ipynb`, preserved with its recorded outputs. It includes historical recovery cells; do not blindly Run All, since some cells back up incomplete folders or start training. For a baseline reference, open `notebooks/Baseline_Reference.ipynb`, set `PROJECT_DIR` to the repository root, and choose a dataset. The reference notebook contains Colab-specific setup/download cells; skip or adapt them outside Colab. Run the training/evaluation cells for the selected dataset. The standalone architecture/evaluation helpers are in `baseline_core.py`.
 
 Preserve the submitted `results/` before launching a new baseline run, because the reference notebook writes there. The extension reads the saved baseline splits, including slide ordering.
 
@@ -54,7 +52,7 @@ The historical runner automatically uses CUDA when available and otherwise CPU. 
 
 **Interrupted runs:** fully completed configurations with `selection.json` are reused. The original runner does not save optimizer/RNG state for epoch-level resumption. Do not simply change `exist_ok=False` to overwrite an incomplete folder. Preserve it separately after confirming no training process is active. Do not change manifest hashes to bypass a settings mismatch. Historical absolute paths in completed-run manifests may differ from a new checkout; use a new run name for reproduction.
 
-For Colab, reading a large HDF5 directly through Drive caused I/O errors in this project. BRACS was completed with a local feature cache and results saved back to Drive. Preserve the actual local-feature launcher with the experiment artifacts when importing them.
+For Colab, reading a large HDF5 directly through Drive caused I/O errors in this project. BRACS was completed with a local feature cache and results saved back to Drive. The actual launcher is preserved at `results_extension/consistency_v1/BRACS/run_with_local_features.py`.
 
 ## Verify and summarize saved results (no GPU or features required)
 
@@ -88,3 +86,18 @@ See `docs/REPRODUCIBILITY_CHECKLIST.md`, `docs/EXPERIMENTS.md`, and the per-data
 - The unimplemented multi-branch proposal is motivated by attention pooling and parallel attention branches, but does not reproduce CLAM's clustering objective. No novelty claim is made.
 
 No new license is asserted over course-provided material or third-party datasets. Preserve their applicable attribution and terms.
+
+## Archived results and validation
+
+All three datasets include four completed extension configurations, each with 30 history rows, a selected checkpoint and a selection record. Their final test metrics, original manifests, saved splits, BRACS local-feature launcher, and report figures are included. Interrupted backup folders were excluded; see `docs/IMPORT_NOTES.md`. The original files in Downloads were left unchanged.
+
+All three result bundles passed file, split-equality, slide-disjointness, history-length, validation-score and selected-candidate checks. The original extension source SHA-256 matches all three experiment manifests. Plots were regenerated from the saved JSON/CSV files without retraining. These checks do not establish independent real-data reproduction.
+
+| Dataset | Method | Accuracy (%) | Macro-AUROC | Macro-F1 | Test CE |
+|---|---|---:|---:|---:|---:|
+| C16 | ABMIL | 82.95 | 0.8704 | 0.8159 | 0.4165 |
+| C16 | Extension | 88.37 | 0.9227 | 0.8714 | 0.2700 |
+| C17 | ABMIL | 79.00 | 0.8351 | 0.5258 | 0.7032 |
+| C17 | Extension | 80.50 | 0.8260 | 0.5759 | 0.7532 |
+| BRACS | ABMIL | 47.67 | 0.8155 | 0.4077 | 1.3560 |
+| BRACS | Extension | 45.35 | 0.8155 | 0.3668 | 1.3731 |
